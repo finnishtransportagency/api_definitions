@@ -1,0 +1,77 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "0.0.1"
+  title: LAM raw data API
+  license:
+    name: Creative Commons 4.0 BY
+    url: https://creativecommons.org/licenses/by/4.0/
+host: ava.liikennevirasto.fi
+basePath: /lam
+schemes: 
+  - https
+# Describe your paths here
+paths:
+  # This is a path endpoint. Change it.
+  /rawdata/{year}/{ELY}/lamraw_{lam_id}_{yearshort}_{day}.csv:
+    # This is a HTTP operation
+    get:
+      produces:
+      - text/csv
+      # Describe this verb here. Note: you can use markdown
+      description: |
+        Gets LAM raw data.
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: year
+          in: path
+          description: year number, minimum is 1995
+          required: true
+          type: number
+          format: integer
+          minimum: 1995
+        -
+          name: yearshort
+          in: path
+          description: two last digits of year number, e.g. 17 for year 2017
+          required: true
+          type: number
+          format: integer
+        -
+          name: ELY
+          in: path
+          description: ELY number '01-12' with leading zero
+          required: true
+          type: string
+          pattern: "[0-1][0-9]"
+        -
+          name: lam_id
+          in: path
+          description: LAM station number. For more info see 'https://tie.digitraffic.fi/api/v1/metadata/documentation/swagger-ui.html#!/metadata/listTmsStationsUsingGET'
+          required: true  
+          type: number
+          format: integer
+        -
+          name: day
+          in: path
+          description: Day number since start of year. 1st of Jan is day 1.
+          required: true  
+          type: number
+          format: integer
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            type: file
+        404:
+          description: not found
