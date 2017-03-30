@@ -46,7 +46,7 @@ paths:
         -
           name: ELY
           in: path
-          description: ELY number '01-12' with leading zero
+          description: ELY number '01-14' with leading zero
           required: true
           type: string
           pattern: "[0-1][0-9]"
